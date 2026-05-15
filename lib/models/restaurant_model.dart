@@ -6,6 +6,7 @@ class RestaurantModel {
   final double longitude;
   final String cuisines;
   final int costForTwo;
+  final int reviewCount;
   final double rating;
   final String? imageUrl;
 
@@ -17,25 +18,23 @@ class RestaurantModel {
     required this.longitude,
     required this.cuisines,
     required this.costForTwo,
+    required this.reviewCount,
     required this.rating,
     this.imageUrl,
   });
 
   factory RestaurantModel.fromJson(Map<String, dynamic> json) {
-    final restaurant = json['restaurant'];
-    final location = restaurant['location'];
-    final rating = restaurant['user_rating'];
-
     return RestaurantModel(
-      id: restaurant['id'].toString(),
-      name: restaurant['name'],
-      address: location['address'],
-      latitude: double.parse(location['latitude']),
-      longitude: double.parse(location['longitude']),
-      cuisines: restaurant['cuisines'],
-      costForTwo: restaurant['average_cost_for_two'] ?? 0,
-      rating: double.parse(rating['aggregate_rating'] ?? '0'),
-      imageUrl: restaurant['featured_image'],
+      id: json['id'],
+      name: json['name'],
+      address: json['address'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      cuisines: json['cuisines'],
+      costForTwo: int.parse(json['costForTwo']),
+      reviewCount: int.parse(json['reviewsCount']),
+      rating: json['rating'],
+      imageUrl: json['imageUrl'],
     );
   }
 }

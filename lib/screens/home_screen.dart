@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  final List<Widget> _screens = [const NearbyScreen(), const SearchMapScreen()];
+  final List<Widget> _screens = [NearbyScreen(), SearchMapScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
