@@ -5,20 +5,15 @@ import 'package:restaurant_app/models/restaurant_model.dart';
 
 class ZomatoService {
   final String apiKey = '';
-  final String baseUrl = "https://api.zomato.com/api/v2.1";
+  final String baseUrl = "https://6a06b68cc83ba8ad9b3dc109.mockapi.io";
 
   Future<List<RestaurantModel>> searchRestaurants(String query) async {
     try {
-      final url = Uri.parse(
-        '$baseUrl/restaurants/search?q=$query&apikey=$apiKey',
-      );
+      final url = Uri.parse('$baseUrl/restaurants');
       //uri.parse converts string to url..idiot
       // basic structure http.get(url, headers)
 
-      final response = await http.get(
-        url,
-        headers: {'apiKey': apiKey, 'Content-Type': 'application/json'},
-      );
+      final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
@@ -27,7 +22,7 @@ class ZomatoService {
         //     .map((rest) => RestaurantModel.fromJson(rest))
         //     .toList();
 
-        List restaurantsList = jsonData['restaurants'] as List;
+        List restaurantsList = jsonData as List;
         List<RestaurantModel> restaurants = [];
 
         for (var rest in restaurantsList) {
@@ -50,18 +45,16 @@ class ZomatoService {
     double longitude,
   ) async {
     try {
-      final url = Uri.parse(
-        '$baseUrl/search?lat=$latitude&lon=$longitude&apikey=$apiKey',
-      );
+      final url = Uri.parse('$baseUrl/restaurants');
+      // final url = Uri.parse(
+      //   '$baseUrl/search?lat=$latitude&lon=$longitude&apikey=$apiKey',
+      // );
 
-      final response = await http.get(
-        url,
-        headers: {'apikey': apiKey, 'Content-Type': 'application/json'},
-      );
+      final response = await http.get(url);
       if (response.statusCode == 200) {
         final jsonData = jsonDecode(response.body);
 
-        List restaurantsList = jsonData['restaurants'] as List;
+        List restaurantsList = jsonData as List;
 
         List<RestaurantModel> restaurants = [];
         for (var rest in restaurantsList) {
