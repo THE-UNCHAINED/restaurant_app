@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:restaurant_app/models/restaurant_model.dart';
+import 'package:restaurant_app/screens/restaurant_detail_screen.dart';
 import 'package:restaurant_app/services/location_service.dart';
 import 'package:restaurant_app/services/zomato_service.dart';
 
@@ -57,10 +58,19 @@ class _NearbyScreenState extends State<NearbyScreen> {
             return ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(data[index].name),
-                  subtitle: Text(data[index].address),
-                  trailing: Text(data[index].rating.toString()),
+                return GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          RestaurantDetailScreen(restaurants: data[index]),
+                    ),
+                  ),
+                  child: ListTile(
+                    title: Text(data[index].name),
+                    subtitle: Text(data[index].address),
+                    trailing: Text(data[index].rating.toString()),
+                  ),
                 );
               },
             );
