@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/models/restaurant_model.dart';
 import 'package:restaurant_app/screens/restaurant_detail_screen.dart';
+import 'package:restaurant_app/services/zomato_service.dart';
 
 class SearchMapScreen extends StatefulWidget {
   const SearchMapScreen({super.key});
@@ -10,16 +11,20 @@ class SearchMapScreen extends StatefulWidget {
 }
 
 class _SearchMapScreenState extends State<SearchMapScreen> {
-  final TextEditingController _controller = TextEditingController();
-  bool _showClearButton = false;
-
+  ZomatoService zomatoService = ZomatoService();
   Future<List<RestaurantModel>>? _restaurantsFuture;
+
+  final TextEditingController _controller = TextEditingController();
+  final bool _showClearButton = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
           Container(
+            margin: EdgeInsets.only(top: 50, left: 16, right: 16),
+
             decoration: BoxDecoration(
               color: Colors.grey[200], // Background color of the search bar
               borderRadius: BorderRadius.circular(30.0), // Rounded corners
@@ -33,7 +38,11 @@ class _SearchMapScreenState extends State<SearchMapScreen> {
             ),
             child: TextField(
               controller: _controller,
-
+              onSubmitted: (value) {
+                setState(() {
+                  _restaurantsFuture = zomatoService.searchRestaurants(value);
+                });
+              },
               textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
                 hintText: 'Search Restaurants',
