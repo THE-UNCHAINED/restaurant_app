@@ -1,24 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/screens/sign_up_screen.dart';
+import 'package:restaurant_app/screens/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+class _SignUpState extends State<SignupScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  void _login() async {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void _signUp() async {
     try {
       if (_formKey.currentState!.validate()) {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text.trim(),
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _emailController.text,
           password: _passwordController.text,
         );
       }
@@ -29,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ).showSnackBar(SnackBar(content: Text(e.toString())));
       }
     }
+    ;
   }
 
   @override
@@ -53,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'Welcome Back',
+                    'Welcome',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 28,
@@ -63,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Sign in to secure your session',
+                    'Sign in to create your account',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 15, color: Colors.grey[600]),
                   ),
@@ -120,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 32),
 
                   ElevatedButton(
-                    onPressed: _login,
+                    onPressed: _signUp,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
                       foregroundColor: Colors.white,
@@ -131,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       elevation: 1,
                     ),
                     child: const Text(
-                      "Login",
+                      "Sign-up",
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -140,19 +142,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   SizedBox(height: 20),
                   TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignupScreen()),
-                      );
-                    },
-                    child: const Text(
-                      "Make a new ACCOUNT or SignUP",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
                     ),
+                    child: Text("Already have an account? Login"),
                   ),
                 ],
               ),
