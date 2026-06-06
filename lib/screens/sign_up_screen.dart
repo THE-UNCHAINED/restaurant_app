@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/screens/auth_wrapper.dart';
 import 'package:restaurant_app/screens/login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -22,6 +23,13 @@ class _SignUpState extends State<SignupScreen> {
           email: _emailController.text,
           password: _passwordController.text,
         );
+        if (mounted) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => AuthWrapper()),
+            (route) => false,
+          );
+        }
       }
     } catch (e) {
       if (mounted) {

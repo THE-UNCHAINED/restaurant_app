@@ -7,13 +7,22 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () {
-            FirebaseAuth.instance.signOut();
-          },
-          child: Text("Logout"),
-        ),
+      body: Column(
+        children: [
+          Center(
+            child: Text(
+              FirebaseAuth.instance.currentUser?.email ?? 'No email Found',
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: Text("Logout"),
+            ),
+          ),
+        ],
       ),
     );
   }
